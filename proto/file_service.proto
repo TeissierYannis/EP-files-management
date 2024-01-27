@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package fileService;
+
+option go_package = "proto/gen";
+
+// The file service definition.
+service FileService {
+  // Opens a file and returns its content.
+  rpc OpenFile (FileRequest) returns (FileResponse) {}
+}
+
+// The request message containing the file path.
+message FileRequest {
+  string path = 1;
+}
+
+// The response message containing the file content.
+message FileResponse {
+  bytes content = 1;
+}

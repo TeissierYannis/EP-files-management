@@ -1,0 +1,17 @@
+# Binaries
+./bin
+
+# Logs
+./logs/
+
+# Files
+./files
+
+# Environment
+.env
+
+go.sum
+.idea
+.vscode
+./proto/gen
+./build
