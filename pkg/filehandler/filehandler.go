@@ -40,11 +40,11 @@ func (d DefaultFileHandler) LoadImage(filePath string) ([]byte, error) {
 	}
 
 	// Encode the image to bytes
-	return encodeImage(img, format)
+	return EncodeImage(img, format)
 }
 
 // encodeImage is a helper function that encodes an image to a byte slice based on its format.
-func encodeImage(img image.Image, format string) ([]byte, error) {
+func EncodeImage(img image.Image, format string) ([]byte, error) {
 	buf := new(bytes.Buffer)
 	switch format {
 	case "jpeg":

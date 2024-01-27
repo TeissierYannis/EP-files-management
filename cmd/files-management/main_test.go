@@ -1,9 +1,9 @@
 package main
 
 import (
-    "context"
-    "files-management/proto/gen"
-    "testing"
+	"context"
+	"files-management/proto/gen"
+	"testing"
 )
 
 type MockFileService struct{}
@@ -17,7 +17,7 @@ func (m *MockFileService) OpenFile(ctx context.Context, in *gen.FileRequest) (*g
 func TestMain(t *testing.T) {
 	// Replace your main logic with the modified mainWithServer function
 	// Pass the MockFileService instance to simulate the gRPC server
-	mainWithServer(&MockFileService{})
+	main()
 
 	// Perform assertions or checks based on your test scenario
 	// For example, you can make gRPC requests to the server here
