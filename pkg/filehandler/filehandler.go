@@ -1,16 +1,14 @@
-// Package filehandler provides functionality for handling files, specifically images.
 package filehandler
 
 import (
 	"bytes"
-	"files-management/pkg/logger"
 	"fmt"
 	"image"
 	"image/jpeg"
-	_ "image/jpeg"
 	"image/png"
-	_ "image/png"
 	"os"
+
+	"files-management/pkg/logger"
 )
 
 // FileHandler is an interface that defines the methods a file handler should have.
@@ -34,12 +32,12 @@ func (d DefaultFileHandler) LoadImage(filePath string) ([]byte, error) {
 	}
 	defer file.Close()
 
+	// Reset the file reader to the beginning
+	file.Seek(0, 0)
+
 	// Decode the image
 	img, format, err := image.Decode(file)
 	if err != nil {
-		if err == ErrUnsupportedFormat {
-			return nil, fmt.Errorf("unsupported image format: %s", format)
-		}
 		return nil, err
 	}
 
@@ -53,12 +51,17 @@ func EncodeImage(img image.Image, format string) ([]byte, error) {
 	switch format {
 	case "jpeg":
 		err := jpeg.Encode(buf, img, nil)
-		return buf.Bytes(), err
+		if err != nil {
+			return nil, err
+		}
 	case "png":
 		err := png.Encode(buf, img)
-		return buf.Bytes(), err
+		if err != nil {
+			return nil, err
+		}
 	default:
 		logger.Error("Unsupported image format: ", format)
-		return nil, fmt.Errorf("unsupported image format: %s", format)
+		return nil, ErrUnsupportedFormat
 	}
+	return buf.Bytes(), nil
 }

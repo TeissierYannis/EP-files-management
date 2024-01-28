@@ -32,7 +32,7 @@ func TestConfigLoadWithoutFile(t *testing.T) {
 
 	// Test LogLevel
 	if cfg.LogLevel != "INFO" {
-		t.Errorf("Expected LogLevel to be 'INFO', got '%s'", cfg.LogLevel)
+		t.Errorf("Expected LogLevel to be 'info', got '%s'", cfg.LogLevel)
 	}
 }
 

@@ -61,12 +61,8 @@ func Error(v ...interface{}) {
 }
 
 func output(level LogLevel, v ...interface{}) {
-	prefix := fmt.Sprintf("[%s][%s] ", time.Now().Format("2006-01-02 15:04:05"), levelToString(level))
-	logger.SetPrefix(prefix)
-
-	// Using fmt.Sprintf to format the message
-	formattedMessage := fmt.Sprint(v...)
-	logger.Println(formattedMessage)
+	logger.SetPrefix(fmt.Sprintf("[%s][%s] ", time.Now().Format("2006-01-02 15:04:05"), levelToString(level)))
+	logger.Println(v...)
 }
 
 func parseLogLevel(level string) LogLevel {

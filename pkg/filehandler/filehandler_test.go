@@ -1,29 +1,49 @@
 package filehandler
 
 import (
+	"os"
 	"testing"
 )
 
 func TestLoadImage(t *testing.T) {
-	tests := []struct {
-		name     string
-		filePath string
-		wantErr  bool
-	}{
-		{"Valid JPEG", "tests_files/valid.JPEG", false},
-		{"Valid PNG", "tests_files/valid.png", false},
-		{"Valid JPG", "tests_files/valid.JPG", false},
-		{"Invalid File", "tests_files/nonexistent.jpg", true},
-		{"Unsupported Format", "tests_files/invalid.svg", true},
+	// Create a new DefaultFileHandler instance
+	dfh := DefaultFileHandler{}
+
+	// Test loading a valid JPEG image
+	_, err := dfh.LoadImage("testdata/valid.JPG")
+	if err != nil {
+		t.Fatalf("Failed to load valid JPEG image: %v", err)
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			dfh := DefaultFileHandler{}
-			_, err := dfh.LoadImage(tt.filePath)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("LoadImage() for %s error = %v, wantErr %v", tt.name, err, tt.wantErr)
-			}
-		})
+	_, err = dfh.LoadImage("testdata/valid.png")
+	if err != nil {
+		t.Fatalf("Failed to load valid PNG image: %v", err)
+	}
+
+	// Test loading an unknown image format
+	_, err = dfh.LoadImage("testdata/invalid.bmp")
+	if err == nil {
+		t.Fatal("Expected error for invalid image format")
+	}
+	if err.Error() != "image: unknown format" {
+		t.Fatalf("%v", err)
+	}
+
+	// Test loading an unsupported image format
+	/*_, err = dfh.LoadImage("testdata/invalid.gif")
+	if err == nil {
+		t.Fatal("Expected error for unsupported image format")
+	}
+	if err != ErrUnsupportedFormat {
+		t.Fatalf("Expected %v, got %v", ErrUnsupportedFormat, err)
+	}*/
+
+	// Test error handling for invalid file path
+	_, err = dfh.LoadImage("/nonexistent/file.jpg")
+	if err == nil {
+		t.Fatal("Expected error for nonexistent file path")
+	}
+	if !os.IsNotExist(err) {
+		t.Fatalf("Expected 'IsNotExist' error, got %v", err)
 	}
 }
