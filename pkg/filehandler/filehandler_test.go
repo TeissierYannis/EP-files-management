@@ -12,9 +12,9 @@ func TestLoadImage(t *testing.T) {
 	}{
 		{"Valid JPEG", "tests_files/valid.JPEG", false},
 		{"Valid PNG", "tests_files/valid.png", false},
-		{"Valid PNG", "tests_files/valid.JPG", false},
+		{"Valid JPG", "tests_files/valid.JPG", false},
 		{"Invalid File", "tests_files/nonexistent.jpg", true},
-		//{"Unsupported Format", "tests_files/invalid.txt", true},
+		{"Unsupported Format", "tests_files/invalid.svg", true},
 	}
 
 	for _, tt := range tests {

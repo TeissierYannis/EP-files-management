@@ -23,6 +23,19 @@ func TestConfigLoad(t *testing.T) {
 	}
 }
 
+func TestConfigLoadWithoutFile(t *testing.T) {
+	// Test LoadConfig function
+	cfg, err := LoadConfig("")
+	if err != nil {
+		t.Fatalf("LoadConfig failed: %v", err)
+	}
+
+	// Test LogLevel
+	if cfg.LogLevel != "INFO" {
+		t.Errorf("Expected LogLevel to be 'INFO', got '%s'", cfg.LogLevel)
+	}
+}
+
 func createSampleEnvFile() {
 	// Create a sample .env file for testing
 	file, err := os.Create(".env.test")
