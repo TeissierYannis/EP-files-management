@@ -60,13 +60,6 @@ func Error(v ...interface{}) {
 	}
 }
 
-func Fatal(v ...interface{}) {
-	if logLevel <= FATAL {
-		output(FATAL, v...)
-		os.Exit(1)
-	}
-}
-
 func output(level LogLevel, v ...interface{}) {
 	prefix := fmt.Sprintf("[%s][%s] ", time.Now().Format("2006-01-02 15:04:05"), levelToString(level))
 	logger.SetPrefix(prefix)

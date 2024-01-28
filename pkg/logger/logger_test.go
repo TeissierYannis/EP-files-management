@@ -18,7 +18,7 @@ func TestLogger(t *testing.T) {
 		{"DebugLog", Debug, "DEBUG", "DEBUG", "test debug message"},
 		{"InfoLog", Info, "INFO", "INFO", "test info message"},
 		{"ErrorLog", Error, "ERROR", "ERROR", "test error message"},
-		{"FatalLog", Fatal, "FATAL", "FATAL", "test fatal message"},
+		{"UnknownLog", Error, "RANDOM", "", "test unknown message"},
 	}
 
 	for _, tt := range tests {

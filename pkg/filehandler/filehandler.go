@@ -22,6 +22,8 @@ type FileHandler interface {
 // DefaultFileHandler is a struct that implements the FileHandler interface.
 type DefaultFileHandler struct{}
 
+var ErrUnsupportedFormat = fmt.Errorf("unsupported image format")
+
 // LoadImage is a method of DefaultFileHandler that opens a file at the provided path,
 // decodes the image and returns it as a byte slice.
 func (d DefaultFileHandler) LoadImage(filePath string) ([]byte, error) {
@@ -35,7 +37,9 @@ func (d DefaultFileHandler) LoadImage(filePath string) ([]byte, error) {
 	// Decode the image
 	img, format, err := image.Decode(file)
 	if err != nil {
-		logger.Error("Failed to decode image: ", err)
+		if err == ErrUnsupportedFormat {
+			return nil, fmt.Errorf("unsupported image format: %s", format)
+		}
 		return nil, err
 	}
 
